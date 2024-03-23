@@ -1,3 +1,6 @@
+import io.ktor.plugin.features.DockerPortMapping
+import io.ktor.plugin.features.DockerPortMappingProtocol
+
 plugins {
     alias(libs.plugins.jvm)
     alias(libs.plugins.kotlinx.serialization)
@@ -21,6 +24,27 @@ application {
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
+
+ktor {
+    docker {
+        jreVersion.set(JavaVersion.VERSION_17)
+
+        localImageName.set("http-to-mqtt-tunnel")
+        imageTag.set(readVersion())
+
+        portMappings.set(
+            listOf(DockerPortMapping(80, 8080, DockerPortMappingProtocol.TCP))
+        )
+
+        externalRegistry.set(
+            io.ktor.plugin.features.DockerImageRegistry.dockerHub(
+                appName = provider { "http-to-mqtt-tunnel" },
+                username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
+                password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
+            )
+        )
+    }
 }
 
 repositories {
