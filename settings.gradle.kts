@@ -1,1 +1,1 @@
-rootProject.name = "com.arnyminerz.httptomqtttunnel"
+rootProject.name = "Http to MQTT Tunnel"
