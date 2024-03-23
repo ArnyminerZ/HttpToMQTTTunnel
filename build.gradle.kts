@@ -26,6 +26,14 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
+sourceSets {
+    val main by getting {
+        resources {
+            srcDir("package")
+        }
+    }
+}
+
 ktor {
     docker {
         jreVersion.set(JavaVersion.VERSION_17)
@@ -64,6 +72,8 @@ dependencies {
     // Logging
     implementation(libs.logback)
 
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.ktor.client.contentNegotiation)
+    testImplementation(libs.ktor.server.testHost)
     testImplementation(libs.ktor.server.tests)
-    testImplementation(libs.kotlin.testJunit)
 }

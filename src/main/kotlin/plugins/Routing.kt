@@ -3,11 +3,19 @@ package plugins
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.jetbrains.annotations.VisibleForTesting
+import response.RootResponse
 
-fun Application.configureRouting() {
+fun Application.installRouting() {
     routing {
-        post("/post") {
+        configureRouting()
+    }
+}
 
-        }
+@VisibleForTesting
+fun Routing.configureRouting() {
+    // root endpoint, provides general information, and serves as ping
+    get("/") {
+        call.respond(RootResponse())
     }
 }
