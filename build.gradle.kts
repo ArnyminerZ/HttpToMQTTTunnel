@@ -4,8 +4,17 @@ plugins {
     alias(libs.plugins.ktor)
 }
 
-group = "com.arnyminerz"
-version = "0.0.1"
+/**
+ * Get the version of the application from the version.txt file.
+ */
+fun readVersion(): String {
+    val pkg = File(rootDir, "package")
+    val file = File(pkg, "version.txt")
+    return file.readText()
+}
+
+group = "com.arnyminerz.httptomqtttunnel"
+version = readVersion()
 
 application {
     mainClass.set("ApplicationKt")
