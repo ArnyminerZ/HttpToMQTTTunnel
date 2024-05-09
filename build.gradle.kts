@@ -72,6 +72,9 @@ dependencies {
     // Logging
     implementation(libs.logback)
 
+    // MQTT Client
+    implementation(libs.paho.mqtt)
+
     testImplementation(libs.kotlin.test)
     testImplementation(libs.ktor.client.contentNegotiation)
     testImplementation(libs.ktor.server.testHost)

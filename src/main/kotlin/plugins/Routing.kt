@@ -1,11 +1,12 @@
 package plugins
 
 import endpoint.RootEndpoint
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import endpoint.StatusEndpoint
+import io.ktor.server.application.Application
+import io.ktor.server.routing.Routing
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import org.jetbrains.annotations.VisibleForTesting
-import response.RootResponse
 
 fun Application.installRouting() {
     routing {
@@ -17,4 +18,5 @@ fun Application.installRouting() {
 fun Routing.configureRouting() {
     // root endpoint, provides general information, and serves as ping
     get("/") { with(RootEndpoint) { endpoint() } }
+    get("/status") { with(StatusEndpoint) { endpoint() } }
 }

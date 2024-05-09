@@ -1,0 +1,30 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    environment:
+      - TZ=Europe/Madrid
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    restart: unless-stopped
+    # healthcheck:
+    #   test: [ "CMD-SHELL", "timeout -t 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1" ]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 6
+  mqtt2http:
+    image: http-to-mqtt-tunnel
+    container_name: http-to-mqtt-tunnel
+    depends_on:
+      - mosquitto
+    #    condition: service_healthy
+    environment:
+      - MQTT_BROKER=tcp://mosquitto:1883
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

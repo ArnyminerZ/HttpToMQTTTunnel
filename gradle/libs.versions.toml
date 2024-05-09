@@ -3,6 +3,7 @@ kotlin = "1.9.23"
 kotlinx-serialization = "1.6.3"
 ktor = "2.3.9"
 logback = "1.4.14"
+paho-mqtt = "1.2.5"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -15,6 +16,7 @@ ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "k
 ktor-server-testHost = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+paho-mqtt = { module = "org.eclipse.paho:org.eclipse.paho.client.mqttv3", version.ref = "paho-mqtt" }
 
 [plugins]
 jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
