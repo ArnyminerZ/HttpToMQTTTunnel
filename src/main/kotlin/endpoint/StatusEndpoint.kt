@@ -7,7 +7,7 @@ import io.ktor.util.pipeline.PipelineContext
 import response.StatusResponse
 import server.MQTT
 
-object StatusEndpoint : Endpoint() {
+object StatusEndpoint : Endpoint("/status") {
     override suspend fun PipelineContext<Unit, ApplicationCall>.endpoint() {
         call.respond(
             StatusResponse(
