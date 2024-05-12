@@ -68,7 +68,6 @@ object MQTT {
                 val payload = message.payload
                 val msg = payload.toString(Charset.defaultCharset())
                 val uptime = msg.substringBefore(' ').toInt()
-                println("Uptime: $uptime seconds")
                 _uptimeFlow.tryEmit(uptime)
             }
         }
