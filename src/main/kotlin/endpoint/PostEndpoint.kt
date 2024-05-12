@@ -13,9 +13,17 @@ object PostEndpoint : Endpoint("/post") {
     override suspend fun PipelineContext<Unit, ApplicationCall>.endpoint() {
         try {
             val body = call.receive<PostRequest>()
-            MQTT.publish(body.topic, body.message)
+            val (topic, message) = body
+
+            if (topic == null || message == null) {
+                call.respond(HttpStatusCode.BadRequest, "Missing 'topic' or 'message' in the request body")
+                return
+            }
+
+            MQTT.publish(topic, message)
             call.respond(HttpStatusCode.Accepted, "OK")
         } catch (e: Exception) {
+            e.printStackTrace(System.err)
             call.respond(HttpStatusCode.InternalServerError, "${e::class.simpleName} :: ${e.message}")
         }
     }
