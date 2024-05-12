@@ -10,7 +10,10 @@ import server.MQTT
 object StatusEndpoint : Endpoint() {
     override suspend fun PipelineContext<Unit, ApplicationCall>.endpoint() {
         call.respond(
-            StatusResponse(MQTT.uptimeFlow.value ?: -1)
+            StatusResponse(
+                connected = MQTT.isConnected(),
+                uptime = MQTT.uptimeFlow.value ?: -1
+            )
         )
     }
 }
