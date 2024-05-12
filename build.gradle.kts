@@ -22,7 +22,7 @@ version = readVersion()
 application {
     mainClass.set("ApplicationKt")
 
-    val isDevelopment: Boolean = project.ext.has("development")
+    val isDevelopment: Boolean = project.ext.has("development") || System.getenv("IS_PRODUCTION") != "true"
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
@@ -39,7 +39,7 @@ ktor {
         jreVersion.set(JavaVersion.VERSION_17)
 
         localImageName.set("http-to-mqtt-tunnel")
-        imageTag.set(readVersion())
+        imageTag.set(if (System.getenv("IS_PRODUCTION") == "true") readVersion() else "development")
 
         portMappings.set(
             listOf(DockerPortMapping(80, 8080, DockerPortMappingProtocol.TCP))
